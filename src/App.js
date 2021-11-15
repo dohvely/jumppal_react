@@ -1,8 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
-// import useFetch from './useFetch'
+import useFetch from './useFetch'
+
 
 function App() {
+
+  const { loading, data, error } = useFetch({ url: `http://125.132.213.115:8080/v1/user?userId=hooook` })
+
+  console.log(`[App] data ::: ${JSON.stringify(data)}`)
+
+  if(loading) { return <p>Loading...</p> }
+  if(error) { return <p>Error!</p> }
+  if(data) { return <p>data delivered</p> }
+  
   return (
     <div className="App">
       <header className="App-header">
