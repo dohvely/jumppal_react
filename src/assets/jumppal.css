@@ -1,0 +1,67 @@
+
+/* 공통 */
+.w140 {
+  width: 140px;
+}
+.w200 {
+	width: 200px;
+}
+.w300 {
+	width: 300px;
+}
+.w310 {
+  width: 310px;
+}
+.w500 {
+	width: 500px;
+}
+.wp90 {
+	width: 90%;
+}
+.h50 {
+  height: 50px;
+}
+.h55 {
+  height: 55px;
+}
+.h100 {
+	height: 100px;
+}
+.h120 {
+	height: 120px;
+}
+
+
+/* 목표 저장 */
+.frm .ul_def {
+	list-style: none;
+	padding-left: 0px;
+	margin-top: 50px;
+	margin-left: 30px;
+}
+.frm .ul_def .li_def {
+	font-size: 25px;
+}
+.frm .ul_def .inp {
+	margin-top: 20px;
+	font-size: 20px;
+	background-color: #fafafa; /*배경색*/
+  border:1.5px solid #000000; /*테두리 두께, 선스타일, 색상*/
+  border-radius:4px; /*테두리 둥글게*/
+  outline:none; /*기본테두리안보이게*/
+  padding:3px 3px 2px 7px; /*안쪽여백*/
+  box-sizing:border-box; /*테두리를 기준으로 박스크기 설정*/
+  transition:.3s; /*서서히 나타내기*/
+}
+.btn_wrap {
+	text-align: center;
+}
+.btn_wrap button {
+	border: 1px solid skyblue;
+	border-radius: 5px;
+	background-color: skyblue;
+	color: #ffffff;
+	padding: 5px;
+	font-size: 25px;
+	margin-top: 100px;
+}

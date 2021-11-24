@@ -24,7 +24,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "react-start": "cross-env NODE_PATH=src reac-scripts start",
+    "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
