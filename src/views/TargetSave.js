@@ -5,10 +5,16 @@ import '../assets/jumppal.css'
 function TargetSave() {
   const [start, setStart] = useState('')
   const [end, setEnd] = useState('')
+  const [commitCount, setCommitCount] = useState('')
+  const [gitUserId, setGitUserId] = useState('')
+  const [gitUserPwd, setGitUserPwd] = useState('')
 
   // 쩜팔 시작하기 버튼 클릭 이벤트
   const submit = () => {
-    console.log('submit!!!')
+    console.log(`기간 ::: ${start} ~ ${end}`)
+    console.log(`커밋 수 ::: ${commitCount}`)
+    console.log(`git계정 ::: ${gitUserId}, ${gitUserPwd}`)
+
   }
 
   // input change 이벤트
@@ -23,6 +29,18 @@ function TargetSave() {
       }
       case 'end': {
         setEnd(e.target.value)
+        break
+      }
+      case 'commitCount': {
+        setCommitCount(e.target.value)
+        break
+      }
+      case 'gitUserId': {
+        setGitUserId(e.target.value)
+        break
+      }
+      case 'gitUserPwd': {
+        setGitUserPwd(e.target.value)
         break
       }
     }
@@ -50,14 +68,29 @@ function TargetSave() {
       <ul className="ul_def">
         <li className="li_def">목표 commit수</li>
         <li>
-          <input type="text" className="inp w140 h50" />
+          <input  type="text"
+                  className="inp w140 h50"
+                  placeholder="숫자만 입력"
+                  value={commitCount}
+                  onChange={(e) => { changeInputValue(e, 'commitCount') }}
+          />
         </li>
       </ul>
       <ul className="ul_def">
         <li className="li_def">Github 계정 정보</li>
         <li>
-          <input type="text" className="inp w310 h50" placeholder="아이디" /><br/>
-          <input type="text" className="inp w310 h50" placeholder="비밀번호" />
+          <input  type="text"
+                  className="inp w310 h50"
+                  placeholder="아이디"
+                  value={gitUserId}
+                  onChange={(e) => { changeInputValue(e, 'gitUserId') }}
+          /><br/>
+          <input  type="password"
+                  className="inp w310 h50"
+                  placeholder="비밀번호"
+                  value={gitUserPwd}
+                  onChange={(e) => { changeInputValue(e, 'gitUserPwd') }}
+          />
         </li>
       </ul>
       
