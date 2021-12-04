@@ -15,6 +15,9 @@
 .w500 {
 	width: 500px;
 }
+.wp50 {
+	width: 50%
+}
 .wp90 {
 	width: 90%;
 }
@@ -56,12 +59,21 @@
 .btn_wrap {
 	text-align: center;
 }
-.btn_wrap button {
+.btn_wrap button.bottom_btn {
 	border: 1px solid skyblue;
 	border-radius: 5px;
 	background-color: skyblue;
 	color: #ffffff;
 	padding: 5px;
-	font-size: 25px;
+	font-size: 45px;
 	margin-top: 100px;
+}
+.btn_wrap button.mini_btn {
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: gray;
+	color: #ffffff;
+	padding: 5px;
+	font-size: 25px;
+	margin-top: 30px;
 }

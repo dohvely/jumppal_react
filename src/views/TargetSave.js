@@ -6,21 +6,17 @@ function TargetSave() {
   const [start, setStart] = useState('')
   const [end, setEnd] = useState('')
   const [commitCount, setCommitCount] = useState('')
-  const [gitUserId, setGitUserId] = useState('')
-  const [gitUserPwd, setGitUserPwd] = useState('')
+
 
   // 쩜팔 시작하기 버튼 클릭 이벤트
   const submit = () => {
+    // TODO: 
     console.log(`기간 ::: ${start} ~ ${end}`)
     console.log(`커밋 수 ::: ${commitCount}`)
-    console.log(`git계정 ::: ${gitUserId}, ${gitUserPwd}`)
-
   }
 
   // input change 이벤트
   const changeInputValue = (e, targetStateName) => {
-
-    // console.log(`changeInputValue ::: ${targetStateName} => ${e.target.value}`)
 
     switch(targetStateName) {
       case 'start': {
@@ -35,16 +31,15 @@ function TargetSave() {
         setCommitCount(e.target.value)
         break
       }
-      case 'gitUserId': {
-        setGitUserId(e.target.value)
-        break
-      }
-      case 'gitUserPwd': {
-        setGitUserPwd(e.target.value)
+      default: {
         break
       }
     }
   }
+
+  const githubClientId = 'd08f513121fec5be6203'
+  const githubCallbackUrl = 'http://localhost:3000/githubauth'
+  const githubLoginUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${githubCallbackUrl}`
 
   return (
     <div className="frm">
@@ -77,25 +72,15 @@ function TargetSave() {
         </li>
       </ul>
       <ul className="ul_def">
-        <li className="li_def">Github 계정 정보</li>
-        <li>
-          <input  type="text"
-                  className="inp w310 h50"
-                  placeholder="아이디"
-                  value={gitUserId}
-                  onChange={(e) => { changeInputValue(e, 'gitUserId') }}
-          /><br/>
-          <input  type="password"
-                  className="inp w310 h50"
-                  placeholder="비밀번호"
-                  value={gitUserPwd}
-                  onChange={(e) => { changeInputValue(e, 'gitUserPwd') }}
-          />
+        <li className="li_def">Github 연동하기</li>
+        <li className="btn_wrap">
+          {/* <button className="mini_btn wp50 h55" onClick={userAccessGithub}>인증하러가기</button> */}
+          <a href={githubLoginUrl}>인증하러가기</a>
         </li>
       </ul>
       
       <div className="btn_wrap">
-        <button className="wp90 h55" onClick={submit}>쩜팔 시작하기</button>
+        <button className="bottom_btn wp90 h55" onClick={submit}>쩜팔 시작하기</button>
       </div>
     </div>
   )
