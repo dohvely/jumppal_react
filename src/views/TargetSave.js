@@ -1,8 +1,9 @@
+import axios from "axios";
 import { useState } from 'react/cjs/react.development'
 import '../assets/jumppal.css'
 
 
-function TargetSave() {
+function TargetSave({ location, history }) {
   const [start, setStart] = useState('')
   const [end, setEnd] = useState('')
   const [commitCount, setCommitCount] = useState('')
@@ -10,9 +11,40 @@ function TargetSave() {
 
   // 쩜팔 시작하기 버튼 클릭 이벤트
   const submit = () => {
-    // TODO: 
-    console.log(`기간 ::: ${start} ~ ${end}`)
-    console.log(`커밋 수 ::: ${commitCount}`)
+
+    axios.put(`http://192.168.0.16:8080/v1/target`, {
+      id: sessionStorage.getItem('access_token'),
+      startDt: start,
+      endDt: end,
+      commitCnt: commitCount
+    })
+    .then(function(response) {
+
+      if(response === undefined || response === null || response.status !== 200) {
+        if(response.statusText !== '') {
+          alert(response.statusText)
+        } else {
+          alert('저장에 실패하였습니다. 다시 시도해주세요.')
+        }
+
+        return false
+      }
+
+      history.push('/')
+
+      /* if(response !== undefined && response !== null
+        && response.data !== undefined && response.data !== null
+        && response.data.accessToken !== undefined && response.data.accessToken !== null) {
+
+      } */
+      
+
+    })
+    .catch(function(error) {
+
+      console.error(`axios post error ::: ${error}`)
+      alert('알 수 없는 에러가 발생하였습니다. 다시 시도해주세요.')
+    })
   }
 
   // input change 이벤트
@@ -36,10 +68,6 @@ function TargetSave() {
       }
     }
   }
-
-  const githubClientId = 'd08f513121fec5be6203'
-  const githubCallbackUrl = 'http://localhost:3000/githubauth'
-  const githubLoginUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${githubCallbackUrl}`
 
   return (
     <div className="frm">
@@ -71,16 +99,9 @@ function TargetSave() {
           />
         </li>
       </ul>
-      <ul className="ul_def">
-        <li className="li_def">Github 연동하기</li>
-        <li className="btn_wrap">
-          {/* <button className="mini_btn wp50 h55" onClick={userAccessGithub}>인증하러가기</button> */}
-          <a href={githubLoginUrl}>인증하러가기</a>
-        </li>
-      </ul>
       
       <div className="btn_wrap">
-        <button className="bottom_btn wp90 h55" onClick={submit}>쩜팔 시작하기</button>
+        <button className="bottom_btn wp90 h55" onClick={submit}>저장</button>
       </div>
     </div>
   )
