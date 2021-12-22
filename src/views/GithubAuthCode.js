@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react/cjs/react.development";
 
-function GithubAuthCode() {
+function GithubAuthCode({ location, history }) {
 
   const [boolLoading, setBoolLoading] = useState(true)
 
@@ -12,15 +12,12 @@ function GithubAuthCode() {
 
   if(code !== undefined && code !== null && code !== '') {
 
-    axios.post(`http://172.30.1.34:8080/v1/user/code`, {
+    axios.post(`http://192.168.0.16:8080/v1/user/code`, {
       clientId: 'd08f513121fec5be6203',
       clientSecret: 'eab141144e284db150b8583a20b55b17a51e037e',
       code
     })
     .then(function(response) {
-      
-      //test
-      console.log(`response ::: ${JSON.stringify(response)}`)
 
       if(response !== undefined && response !== null
         && response.data !== undefined && response.data !== null
@@ -29,7 +26,8 @@ function GithubAuthCode() {
           sessionStorage.setItem('access_token', response.data.accessToken)
           setBoolLoading(false)
 
-          
+          // 목표설정 화면으로
+          history.push('/target/save')
       }
       
 
@@ -37,20 +35,9 @@ function GithubAuthCode() {
     .catch(function(error) {
 
       console.error(`axios post error ::: ${error}`)
+      alert('알 수 없는 에러가 발생하였습니다. 다시 시도해주세요.')
     })
   }
-
-
-  //sample
-  /* return (
-    <div>
-      {
-        1 === 1
-        ? <p>참이면 보여줄 HTML</p>
-        : null
-      }
-    </div>
-  ) */
 
   return (
     <div>
