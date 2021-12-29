@@ -1,5 +1,5 @@
-
 import CommonUtil from '../js/common.util.js'
+import Slider from '@mui/material/Slider'
 
 function MainBoard() {
 
@@ -15,7 +15,13 @@ function MainBoard() {
         <div className="box">{CommonUtil.dateToMMDDKoreanFormat({ date: today })}</div>
         <div className="box">10/<span>100회</span></div>
       </div>
-      Yapp!
+      <Slider
+        defaultValue={30}
+        sx={{
+          width: 300,
+          color: 'success.main'
+        }}
+      ></Slider>
     </section>
   )
 
