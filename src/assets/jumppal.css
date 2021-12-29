@@ -77,3 +77,29 @@
 	font-size: 25px;
 	margin-top: 30px;
 }
+
+
+/* 메인 */
+.main_box_wrap {
+  padding: 10px;
+  display: flex;
+}
+.main_box_wrap .box {
+  width: 40%;
+  height: 120px;
+  margin: 20px;
+  padding: 35px 10px 10px 10px;
+  border-width: 10px;
+  border-radius: 20px;
+  background-color: pink;
+  box-sizing: border-box;
+  /* box-shadow: 2px 2px 2px 2px gray; */
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+.main_box_wrap .box span {
+  font-size: 21px;
+  font-weight: bold;
+  text-align: center;
+}
