@@ -103,3 +103,7 @@
   font-weight: bold;
   text-align: center;
 }
+.main_box_wrap ul {
+  list-style: none;
+  padding-left: 0px;
+}
