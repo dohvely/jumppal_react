@@ -4,7 +4,7 @@ import '../assets/jumppal.css'
 function GithubAuthorize() {
 
   const githubClientId = 'd08f513121fec5be6203'
-  const githubCallbackUrl = 'http://localhost:3000/githubauth'
+  const githubCallbackUrl = 'http://localhost:3000/github/auth/code'
   const githubLoginUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${githubCallbackUrl}`
 
   return (

@@ -12,11 +12,10 @@ function GithubAuthCode({ location, history }) {
 
   if(code !== undefined && code !== null && code !== '') {
 
-    axios.post(`http://192.168.0.16:8080/v1/user/code`, {
-      clientId: 'd08f513121fec5be6203',
-      clientSecret: 'eab141144e284db150b8583a20b55b17a51e037e',
-      code
-    })
+    const clientId = 'd08f513121fec5be6203'
+    const clientSecret = 'eab141144e284db150b8583a20b55b17a51e037e'
+    let queryString = `client_id=${clientId}&client_secret=${clientSecret}&code=${code}`
+    axios.post(`https://github.com/login/oauth/access_token?${queryString}`)
     .then(function(response) {
 
       if(response !== undefined && response !== null
@@ -29,8 +28,6 @@ function GithubAuthCode({ location, history }) {
           // 목표설정 화면으로
           history.push('/target/save')
       }
-      
-
     })
     .catch(function(error) {
 

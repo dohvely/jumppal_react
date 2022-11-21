@@ -11,9 +11,9 @@ function App() {
   return (
     <BrowserRouter>
       {/* Github 인증 */}
-      <Route path="/github/authorize" exact component={GithubAuthorize}></Route>
+      <Route path="/github/auth" exact component={GithubAuthorize}></Route>
       {/* Github 인증 코드 수신 */}
-      <Route path="/githubauth" exact component={GithubAuthCode}></Route>
+      <Route path="/github/auth/code" exact component={GithubAuthCode}></Route>
       {/* 목표 저장 */}
       <Route path="/target/save" exact component={TargetSave}></Route>
       {/* 메인 화면 */}
