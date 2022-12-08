@@ -3,7 +3,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import TargetSave from './views/TargetSave'
 import GithubAuthorize from './views/GithubAuthorize';
 import GithubAuthCode from './views/GithubAuthCode';
-import MainBoard from './views/MainBoard'
+// import MainBoard from './views/MainBoard'
+import MainBoardFigma from './views/MainBoardFigma'
 
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
       {/* 목표 저장 */}
       <Route path="/target/save" exact component={TargetSave}></Route>
       {/* 메인 화면 */}
-      <Route path="/" exact component={MainBoard}></Route>
+      <Route path="/" exact component={MainBoardFigma}></Route>
+      {/* <Route path="/" exact component={MainBoard}></Route> */}
     </BrowserRouter>
   );
 }
