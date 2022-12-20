@@ -68,7 +68,7 @@ function MainBoardFigma() {
     <div className="v1_2">
       <div className="v1_7"></div>
       <div className="v1_12"></div>
-        <span className="v1_13">10/100회</span><span className="v1_14">11/16</span>
+        <span className="v1_13">10/100회</span><span className="v1_14">{CommonUtil.dateToMMDDKoreanFormat({ date: today })}</span>
         <span className="v1_16">
           <Slider
             defaultValue={30}
