@@ -65,9 +65,36 @@ function MainBoardFigma() {
   // 필요한 component들..
   // 1. gaugebar => slider? Customized sliders
   return (
-    <div class="v1_2"><div class="v1_7"></div><div class="v1_12"></div><span class="v1_13">10/100회</span><span class="v1_14">11/16</span><span class="v1_16">2022.12.31</span><span class="v1_18">2022.12.01</span><span class="v1_19">최근 commit</span><span class="v1_20">dfdfd
-fdfdfd
-d</span><div class="v1_34"><div class="v1_35"></div></div><span class="v3_36">나의 To-do</span><div class="v3_40"><div class="v3_41"></div></div><div class="v3_42"></div></div>
+    <div className="v1_2">
+      <div className="v1_7"></div>
+      <div className="v1_12"></div>
+        <span className="v1_13">10/100회</span><span className="v1_14">11/16</span>
+        <span className="v1_16">
+          <Slider
+            defaultValue={30}
+            sx={{
+              width: 300,
+              color: 'success.main'
+            }}
+          ></Slider>
+        </span>
+        {/* <span className="v1_18">2022.12.01</span> */}
+        {/* <span className="v1_16">2022.12.31</span><span className="v1_18">2022.12.01</span> */}
+        <span className="v1_19">최근 commit</span>
+          <span className="v1_20">
+            dfdfd
+            fdfdfd
+            d
+          </span>
+      <div className="v1_34">
+        <div className="v1_35"></div>
+      </div>
+      <span className="v3_36">나의 To-do</span>
+      <div className="v3_40">
+        <div className="v3_41"></div>
+      </div>
+      <div className="v3_42"></div>
+    </div>
   )
 
 }
