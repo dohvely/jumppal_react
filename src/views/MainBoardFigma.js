@@ -12,6 +12,16 @@ function MainBoardFigma() {
   let today = new Date()
 
   // TODO: 최근 commit 리스트 조회
+  fetch(`https://api.github.repos/dohvely/jumppal_react/commits`, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    // body: {}
+  }).then(response => response.json())
+  .then(response => {
+    console.log(`response ::: ${JSON.stringify(response)}`)
+  })
 
   // 나의 To-do 저장
   const saveTodoText = event => {
