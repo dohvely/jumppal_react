@@ -43,7 +43,7 @@ function TargetSave({ location, history }) {
     .catch(function(error) {
 
       console.error(`axios post error ::: ${error}`)
-      alert('알 수 없는 에러가 발생하였습니다. 다시 시도해주세요.')
+      alert('[TargetSave] 알 수 없는 에러가 발생하였습니다. 다시 시도해주세요.')
     })
   }
 
