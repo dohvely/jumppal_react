@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import '../assets/jumppal.css'
 import axios from 'axios'
 
@@ -40,36 +41,91 @@ async function getUser() {
 
 }
 
-async function testGithub() {
+// console 오류 발생.
+/* async function testGithub() {
   const ghrepos = require("ghrepos");
-  const authOptions = { use: "dohvely", token: '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' }
-  // const authOptions = { use: "seojinseojin", token: process.env.PAT }
+  // 2023.05.01 생성 tokens(notes : jummpal_react
+  const authOptions = { use: "dohvely", token: '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' }
+  // const authOptions = { use: "dohvely", token: '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' }
 
   await ghrepos.listUser(authOptions, "dohvely", (err, repolist) => {
-      // console.log(repolist)
       repolist.forEach((repo) => {
         console.log(repo);
       })
   })
-}
+} */
 
 function GithubAuthorize() {
 
-  const githubClientId = 'd08f513121fec5be6203'
-  const githubCallbackUrl = 'http://localhost:3000/github/auth/code'
-  const githubLoginUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${githubCallbackUrl}`
+  const [userName, setUserName] = useState(() => localStorageGetter('userName'))
+  const [repoName, setRepoName] = useState(() => localStorageGetter('repoName'))
+  const [enterUserName, setEnterUserName] = useState('')
+  const [enterRepoName, setEnterRepoName] = useState('')
+
+  function localStorageGetter(key) {
+    console.log(`localStorageGetter ::: ${key}`)
+
+    if(key) {
+      return localStorage.getItem(key) ?? ''
+    } else {
+      return ''
+    }
+  }
+
+
+  const onChangeEnterUserName = (e) => {
+    setEnterUserName(e.target.value ?? '')
+  }
+  const onChangeEnterRepoName = (e) => {
+    setEnterRepoName(e.target.value ?? '')
+  }
+  const saveGithubUserInfo = () => {
+
+    if(!enterUserName || !enterRepoName) {
+      alert('사용자명 또는 repository명을 입력해주세요.')
+      return false
+    }
+
+    localStorage.setItem('userName', enterUserName)
+    localStorage.setItem('repoName', enterRepoName)
+    setUserName(enterUserName)
+    setRepoName(enterRepoName)
+  }
+
+
+
+  // const githubClientId = 'd08f513121fec5be6203'
+  // const githubCallbackUrl = 'http://localhost:3000/github/auth/code'
+  // const githubLoginUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${githubCallbackUrl}`
 
   return (
     <div className="frm">
       <ul className="ul_def">
-        <li className="li_def">Github 연동하기</li>
-        <li className="btn_wrap">
-          <a href={githubLoginUrl}>인증하러가기</a><br/><br/>
-          <button type="primary" onClick={getData}>인증테스트하기(getData)</button>
-          <button type="primary" onClick={getUser}>인증테스트하기(getUser)</button>
-          <button type="primary" onClick={testGithub}>인증테스트하기(testGithub)</button>
-        </li>
+        <li className="li_def">Jummpal 시작하기</li>
       </ul>
+      {!userName && !repoName && 
+        <ul className="ul_def">
+          <li>
+            Github 사용자명 : <input  type="text"
+                                    onChange={onChangeEnterUserName}
+                                    /><br/>
+            Github repository명 : <input  type="text"
+                                          onChange={onChangeEnterRepoName}
+                                          /><br/>
+          </li>
+          <li className="btn_wrap">
+            <br/>
+            <button type="primary" onClick={saveGithubUserInfo}>저장하기</button>
+          </li>
+        </ul>
+      }
+      {userName && repoName && 
+        <ul className="ul_def">
+          <li>
+            목표를 설정하자!
+          </li>
+        </ul>
+      }
     </div>
   )
 }
