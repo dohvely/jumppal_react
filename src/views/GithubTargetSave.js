@@ -59,11 +59,13 @@ function GithubTargetSave({ location, history }) {
 
   const [userName, setUserName] = useState(() => localStorageGetter('userName'))
   const [repoName, setRepoName] = useState(() => localStorageGetter('repoName'))
+  const [token, setToken] = useState(() => localStorageGetter('token'))
   const [targetCommitCount, setTargetCommitCount] = useState(() => localStorageGetter('targetCommitCount'))
   const [targetStartDate, setTargetStartDate] = useState(() => localStorageGetter('targetStartDate'))
   const [targetEndDate, setTargetEndDate] = useState(() => localStorageGetter('targetEndDate'))
   const [enterUserName, setEnterUserName] = useState('')
   const [enterRepoName, setEnterRepoName] = useState('')
+  const [enterToken, setEnterToken] = useState('')
 
   function localStorageGetter(key) {
     console.log(`localStorageGetter ::: ${key}`)
@@ -81,17 +83,23 @@ function GithubTargetSave({ location, history }) {
   const onChangeEnterRepoName = (e) => {
     setEnterRepoName(e.target.value ?? '')
   }
+  const onChangeEnterToken = (e) => {
+    setEnterToken(e.target.value ?? '')
+  }
   const saveGithubUserInfo = () => {
 
     if(!enterUserName || !enterRepoName) {
       alert('사용자명 또는 repository명을 입력해주세요.')
       return false
     }
+    const defineToken = !enterToken || enterToken.trim() === '' ? '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' : enterToken 
 
     localStorage.setItem('userName', enterUserName)
     localStorage.setItem('repoName', enterRepoName)
+    localStorage.setItem('token', defineToken)
     setUserName(enterUserName)
     setRepoName(enterRepoName)
+    setToken(defineToken)
   }
 
   const changeTargetDate = (e, type) => {
@@ -140,11 +148,12 @@ function GithubTargetSave({ location, history }) {
       <ul className="ul_def">
         <li className="li_def">Jummpal 시작하기</li>
       </ul>
-      {!userName && !repoName && 
+      {!userName && !repoName && !token && 
         <ul className="ul_def">
           <li>
             Github 사용자명 : <input type="text" onChange={onChangeEnterUserName} /><br/>
             Github repository명 : <input type="text" onChange={onChangeEnterRepoName} /><br/>
+            Github token : <input type="text" onChange={onChangeEnterToken} /><br/>
           </li>
           <li className="btn_wrap">
             <br/>
@@ -152,7 +161,7 @@ function GithubTargetSave({ location, history }) {
           </li>
         </ul>
       }
-      {userName && repoName && 
+      {userName && repoName && token &&
         <ul className="ul_def">
           <li>
             목표를 설정하자!
