@@ -3,6 +3,9 @@ import CommonUtil from '../js/common.util.js'
 import { useState } from 'react/cjs/react.development'
 import Slider from '@mui/material/Slider'
 import '../assets/jumppal_figma.css'
+import { useEffect } from "react";
+
+const { Octokit } = require("@octokit/rest")
 
 function MainBoardFigma() {
   const [commitCnt, commitTargetCnt] = useState(0)  // 커밋 수, 목표 커밋 수
@@ -11,17 +14,44 @@ function MainBoardFigma() {
 
   let today = new Date()
 
-  // TODO: 최근 commit 리스트 조회
-  fetch(`https://api.github.repos/dohvely/jumppal_react/commits`, {
-    method: 'GET',
-    headers: {
-      'Content-type': 'application/json'
-    },
-    // body: {}
-  }).then(response => response.json())
-  .then(response => {
-    console.log(`response ::: ${JSON.stringify(response)}`)
+  useEffect(() => {
+    fetchRepos().then(response => {
+      console.log(`here!!!`)
+      console.log(response)
+    })
   })
+
+  const fetchRepos = async function() {
+
+    const octokit = new Octokit({
+      auth: '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'
+    })
+    await octokit.request('GET /orgs/{org}/repos', {
+      org: 'CBNU-TUX'
+    })
+
+    // TODO: 최근 commit 리스트 조회
+    /* const octokit = new Octokit({
+      auth: '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'
+    })
+    return await octokit.request('GET /repos/{owner}/{repo}', {
+      owner: 'dohvely',
+      repo: 'jumppal_react',
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    }) */
+    /* fetch(`https://api.github.repos/dohvely/jumppal_react/commits`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      // body: {}
+    }).then(response => response.json())
+    .then(response => {
+      console.log(`response ::: ${JSON.stringify(response)}`)
+    }) */
+  }
 
   // 나의 To-do 저장
   const saveTodoText = event => {
