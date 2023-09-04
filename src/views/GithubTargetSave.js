@@ -92,14 +92,13 @@ function GithubTargetSave({ location, history }) {
       alert('사용자명 또는 repository명을 입력해주세요.')
       return false
     }
-    const defineToken = !enterToken || enterToken.trim() === '' ? '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' : enterToken 
 
     localStorage.setItem('userName', enterUserName)
     localStorage.setItem('repoName', enterRepoName)
-    localStorage.setItem('token', defineToken)
+    localStorage.setItem('token', enterToken)
     setUserName(enterUserName)
     setRepoName(enterRepoName)
-    setToken(defineToken)
+    setToken(enterToken)
   }
 
   const changeTargetDate = (e, type) => {
