@@ -23,34 +23,23 @@ function MainBoardFigma() {
 
   const fetchRepos = async function() {
 
-    const octokit = new Octokit({
-      auth: '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'
-    })
-    await octokit.request('GET /orgs/{org}/repos', {
-      org: 'CBNU-TUX'
-    })
+    const token = localStorage.getItem('token')
+
+    if(!token || token === '') {
+      alert('Github 토큰 정보가 없어 조회할 수 있는 데이터가 없습니다.')
+    }
 
     // TODO: 최근 commit 리스트 조회
-    /* const octokit = new Octokit({
-      auth: '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'
+    const octokit = new Octokit({
+      auth: token
     })
-    return await octokit.request('GET /repos/{owner}/{repo}', {
-      owner: 'dohvely',
-      repo: 'jumppal_react',
+    await octokit.request('GET /repos/{owner}/{repo}/commits', {
+      owner: localStorage.getItem('userName'),
+      repo: localStorage.getItem('repoName'),
       headers: {
         'X-GitHub-Api-Version': '2022-11-28'
       }
-    }) */
-    /* fetch(`https://api.github.repos/dohvely/jumppal_react/commits`, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      // body: {}
-    }).then(response => response.json())
-    .then(response => {
-      console.log(`response ::: ${JSON.stringify(response)}`)
-    }) */
+    })
   }
 
   // 나의 To-do 저장
