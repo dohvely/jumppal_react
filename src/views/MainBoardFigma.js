@@ -8,16 +8,22 @@ import { useEffect } from "react";
 const { Octokit } = require("@octokit/rest")
 
 function MainBoardFigma() {
-  const [commitCnt, commitTargetCnt] = useState(0)  // 커밋 수, 목표 커밋 수
   const commitPer = useState(0) // 커밋 진행률(%)
   const [todoText, setTodoText] = useState('') // 나의 To-do 텍스트
 
+  const targetCommitCount = localStorage.getItem('targetCommitCount')
+  const targetStartDate = localStorage.getItem('targetStartDate')
+  const targetEndDate = localStorage.getItem('targetEndDate')
+  const [githubCommitList, setGithubCommitList] = useState([])
+  const [githubCommitCount, setGithubCommitCount] = useState(0)
   let today = new Date()
 
   useEffect(() => {
-    fetchRepos().then(response => {
-      console.log(`here!!!`)
-      console.log(response)
+    fetchRepos().then(commitList => {
+      setGithubCommitList(commitList)
+
+      // TODO: githubCommitCount set state.
+
     })
   })
 
@@ -29,17 +35,34 @@ function MainBoardFigma() {
       alert('Github 토큰 정보가 없어 조회할 수 있는 데이터가 없습니다.')
     }
 
-    // TODO: 최근 commit 리스트 조회
+    // 최근 commit 리스트 조회
     const octokit = new Octokit({
       auth: token
     })
-    await octokit.request('GET /repos/{owner}/{repo}/commits', {
+    let response = await octokit.request('GET /repos/{owner}/{repo}/commits', {
       owner: localStorage.getItem('userName'),
       repo: localStorage.getItem('repoName'),
       headers: {
         'X-GitHub-Api-Version': '2022-11-28'
       }
     })
+
+    if(response.status === 200) {
+
+      // response.data 가공하여 return
+      const commitList = response.data.map(item => {
+        return {
+          date: item.commit.committer.date,
+          message: item.commit.message,
+        }
+      })
+
+      return commitList
+
+    } else {
+      alert('Github 데이터 조회 오류 발생')
+      return false
+    }
   }
 
   // 나의 To-do 저장
@@ -51,43 +74,9 @@ function MainBoardFigma() {
 
   }
 
-  //test
-  const submit = () => {
-
-
-    /* let GitHub = require('github-api')
-    let noAuth = new GitHub()
-
-    let dohvely = noAuth.getUser('dohvely')
-    dohvely.listStarredRepos(function(err, repos) {
-      console.log(`repos ::: ${JSON.stringify(repos)}`)
-    }) */
-
-
-    // sample1
-    /* axios.get(`https://api.github.com/repos/dohvely/jumppal_react/commits`, {
-      id: sessionStorage.getItem('access_token'),
-    })
-    .then(function(response) {
-
-      //test
-      console.log(`response ::: ${JSON.stringify(response)}`)
-
-      if(response === undefined || response === null || response.status !== 200) {
-        if(response.statusText !== '') {
-          alert(response.statusText)
-        } else {
-          alert('저장에 실패하였습니다. 다시 시도해주세요.')
-        }
-
-        return false
-      }
-    })
-    .catch(function(error) {
-
-      console.error(`axios post error ::: ${error}`)
-      alert('알 수 없는 에러가 발생하였습니다. 다시 시도해주세요.')
-    }) */
+  // formatter 처리한 날짜 return하는 함수
+  const dateStringWithFormat = function(yyyy = today.getFullYear(), mm = today.getMonth()+1, dd = today.getDate()) {
+    return `${yyyy}년 ${mm}월 ${dd}일`
   }
 
 
@@ -97,7 +86,12 @@ function MainBoardFigma() {
     <div className="v1_2">
       <div className="v1_7"></div>
       <div className="v1_12"></div>
-        <span className="v1_13">10/100회</span><span className="v1_14">{CommonUtil.dateToMMDDKoreanFormat({ date: today })}</span>
+        <span className="v1_13">{githubCommitCount}/{targetCommitCount}회</span>
+        <span className="v1_14">{CommonUtil.dateToMMDDKoreanFormat({ date: today })}</span>
+        <span className="v1_15">
+          {dateStringWithFormat(targetStartDate.substring(0,4), targetStartDate.substring(4,6), targetStartDate.substring(6))} ~ 
+          {dateStringWithFormat(targetEndDate.substring(0,4), targetEndDate.substring(4,6), targetEndDate.substring(6))}
+        </span>
         <span className="v1_16">
           <Slider
             defaultValue={30}
